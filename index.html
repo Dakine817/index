@@ -7,54 +7,47 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
-.header { background: #ff6b35; color: white; padding: 40px 20px; text-align: center; }
-.header h1 { font-size: 2.5em; margin-bottom: 10px; }
-.header p { font-size: 1.1em; margin-bottom: 20px; }
+header { background: #ff6b35; color: white; padding: 40px 20px; text-align: center; }
+header h1 { font-size: 2.5em; margin-bottom: 10px; }
+header p { font-size: 1.1em; margin-bottom: 20px; }
 .container { max-width: 900px; margin: 20px auto; padding: 20px; }
 .form-section { background: white; padding: 40px; border-radius: 8px; margin-bottom: 30px; }
 .form-section h2 { color: #ff6b35; margin-bottom: 20px; font-size: 1.8em; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 .form-group { margin-bottom: 15px; }
 .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
 .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 1em; }
-.form-group textarea { resize: vertical; min-height: 100px; }
+.form-group textarea { min-height: 100px; resize: vertical; }
 .submit-btn { background: #ff6b35; color: white; padding: 12px 30px; border: none; border-radius: 4px; font-size: 1em; font-weight: bold; cursor: pointer; }
-.submit-btn:hover { background: #ff8c42; }
-.success-msg { display: none; color: #27ae60; font-size: 1.1em; margin-top: 20px; }
-#chatbot-section { display: none; background: white; padding: 30px; border-radius: 8px; margin-top: 30px; }
-#chatbot-section h3 { color: #ff6b35; margin-bottom: 15px; }
+.submit-btn:hover { background: #ff5722; }
+.success-msg { display: none; background: #4caf50; color: white; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+.chatbot-section { display: none; background: white; padding: 30px; border-radius: 8px; margin-top: 30px; }
+.chatbot-section h3 { color: #ff6b35; margin-bottom: 15px; }
 .chat-messages { background: #f9f9f9; padding: 15px; border-radius: 4px; height: 300px; overflow-y: auto; margin-bottom: 15px; border: 1px solid #ddd; }
 .msg { margin-bottom: 10px; padding: 10px; border-radius: 4px; }
-.msg.user { background: #ff6b35; color: white; text-align: right; }
-.msg.bot { background: #f0f0f0; color: #333; }
-#chat-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px; }
+.msg.bot { background: #ff6b35; color: white; }
+.msg.user { background: #e0e0e0; color: #333; text-align: right; }
+.chat-input-row { display: flex; gap: 10px; }
+#chat-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
 #send-btn { background: #ff6b35; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-#send-btn:hover { background: #ff8c42; }
-.form-row.full { grid-template-columns: 1fr; }
+#send-btn:hover { background: #ff5722; }
 </style>
 </head>
 <body>
-
-<div class="header">
+<header>
 <h1>Honolulu HVAC Services</h1>
-<p>Fast, Reliable Heating & Cooling Solutions</p>
-</div>
+<p>Fast, Reliable Cooling & Heating Solutions</p>
+</header>
 
 <div class="container">
+<div class="success-msg" id="success-msg">Thank you! We'll contact you soon with your free quote.</div>
+
 <div class="form-section">
 <h2>Get Your Free HVAC Quote</h2>
-<form id="lead-form">
-<div class="form-row">
+<form id="lead-form" action="https://formspree.io/f/xwvwzzjq" method="POST">
 <div class="form-group">
-<label>First Name</label>
-<input type="text" name="first_name" required>
+<label>Name</label>
+<input type="text" name="name" required>
 </div>
-<div class="form-group">
-<label>Last Name</label>
-<input type="text" name="last_name" required>
-</div>
-</div>
-<div class="form-row">
 <div class="form-group">
 <label>Email</label>
 <input type="email" name="email" required>
@@ -63,109 +56,84 @@ body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
 <label>Phone</label>
 <input type="tel" name="phone" required>
 </div>
-</div>
-<div class="form-row full">
 <div class="form-group">
 <label>Service Needed</label>
-<input type="text" name="service" placeholder="e.g., AC Repair, Installation, Maintenance" required>
+<input type="text" name="service" placeholder="e.g., AC Repair, Installation" required>
 </div>
-</div>
-<div class="form-row full">
 <div class="form-group">
-<label>Message</label>
-<textarea name="message" placeholder="Tell us more about your HVAC needs..."></textarea>
+<label>Additional Details</label>
+<textarea name="message" placeholder="Tell us more about your needs..."></textarea>
 </div>
-</div>
-<button type="submit" class="submit-btn">Get My Free Quote →</button>
+<button type="submit" class="submit-btn">Get Free Quote →</button>
 </form>
-<div class="success-msg">Thank you! We'll contact you shortly with your free quote.</div>
 </div>
 
-<div id="chatbot-section">
-<h3>HVAC Assistant</h3>
+<div class="chatbot-section" id="chatbot-section">
+<h3>Chat with our HVAC Assistant</h3>
 <div class="chat-messages" id="chat-messages"></div>
-<input type="text" id="chat-input" placeholder="Ask me about HVAC services...">
+<div class="chat-input-row">
+<input type="text" id="chat-input" placeholder="Ask a question...">
 <button id="send-btn">Send</button>
+</div>
 </div>
 </div>
 
 <script>
-const faqData = {
-"repair": "We offer fast AC and heating repair services. Our technicians can typically arrive within 24 hours. What specific issue are you experiencing?",
-"installation": "We install new AC and heating systems for homes and businesses. We'll provide a free estimate after assessing your space.",
-"maintenance": "Regular HVAC maintenance extends system life and improves efficiency. We recommend service twice yearly.",
-"emergency": "Yes, we offer 24/7 emergency HVAC services for urgent issues. Call us anytime!",
-"price": "Pricing varies by job. We provide free estimates. Contact us with details about your needs.",
-"warranty": "All our work comes with a service warranty. New systems include manufacturer warranties.",
-"aloha": "Aloha! How can we help with your HVAC needs today?",
-"hello": "Hello! Welcome to Honolulu HVAC Services. What can we help you with?"
-};
-
 const form = document.getElementById('lead-form');
-const successMsg = document.querySelector('.success-msg');
+const successMsg = document.getElementById('success-msg');
 const chatbotSection = document.getElementById('chatbot-section');
+
+form.addEventListener('submit', function(e) {
+e.preventDefault();
+successMsg.style.display = 'block';
+chatbotSection.style.display = 'block';
+form.style.display = 'none';
+chatbotSection.scrollIntoView({ behavior: 'smooth' });
+});
+
 const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const sendBtn = document.getElementById('send-btn');
 
-form.addEventListener('submit', async (e) => {
-e.preventDefault();
-
-const formData = new FormData(form);
-
-try {
-const response = await fetch('https://formspree.io/f/xwvwzzjq', {
-method: 'POST',
-body: formData,
-headers: { 'Accept': 'application/json' }
-});
-
-if (response.ok) {
-form.style.display = 'none';
-successMsg.style.display = 'block';
-chatbotSection.style.display = 'block';
-addMessage('Hi! Thanks for requesting a quote. How can I help answer questions about our services?', 'bot');
-}
-} catch (err) {
-alert('Error submitting form. Please try again.');
-}
-});
+const responses = {
+'hello': 'Hi there! How can I help with your HVAC needs today?',
+'repair': 'We offer fast AC and heating repairs. What specifically needs fixing?',
+'installation': 'We install new AC and heating systems. Would you like a quote?',
+'price': 'Pricing depends on the job. A technician will give you an exact estimate.',
+'emergency': 'Yes, we handle emergency calls 24/7!',
+'default': 'Great question! For more details, a technician will reach out soon.'
+};
 
 function addMessage(text, sender) {
-const msg = document.createElement('div');
-msg.className = `msg ${sender}`;
-msg.textContent = text;
-chatMessages.appendChild(msg);
+const msgDiv = document.createElement('div');
+msgDiv.className = `msg ${sender}`;
+msgDiv.textContent = text;
+chatMessages.appendChild(msgDiv);
 chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-function getBotResponse(userInput) {
-const input = userInput.toLowerCase();
-for (let keyword in faqData) {
-if (input.includes(keyword)) {
-return faqData[keyword];
+function getResponse(input) {
+input = input.toLowerCase();
+for (let key in responses) {
+if (input.includes(key)) return responses[key];
 }
-}
-return "Great question! Feel free to ask about our AC repair, installation, maintenance, emergency services, pricing, or warranties. Or just say hello!";
+return responses['default'];
 }
 
-sendBtn.addEventListener('click', () => {
+sendBtn.addEventListener('click', function() {
 const text = chatInput.value.trim();
-if (!text) return;
-
+if (text) {
 addMessage(text, 'user');
 chatInput.value = '';
-
 setTimeout(() => {
-const response = getBotResponse(text);
-addMessage(response, 'bot');
+addMessage(getResponse(text), 'bot');
 }, 500);
+}
 });
 
-chatInput.addEventListener('keypress', (e) => {
+chatInput.addEventListener('keypress', function(e) {
 if (e.key === 'Enter') sendBtn.click();
 });
 </script>
-
 </body>
 </html>
