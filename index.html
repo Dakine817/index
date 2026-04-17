@@ -329,7 +329,7 @@ document.getElementById('quote-btn').addEventListener('click', function() {
   document.getElementById('leadForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
-    fetch('YOUR_WEB_APP_URL', {
+    fetch('https://script.google.com/macros/s/AKfycbxjTdFnPHUdgMVkTgGCyAeMYazc_KqZEpxnXV0Ibngxq_un4COJm4G6pvA-_xTW-ijO/exec', {
       method: 'POST',
       body: formData
     })
