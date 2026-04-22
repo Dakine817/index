@@ -303,40 +303,6 @@ document.getElementById('quote-btn').addEventListener('click', function() {
   document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
 });
 
-<form id="leadForm">
-  <input type="text" name="name" placeholder="Your Name" required><br>
-  <input type="tel" name="phone" placeholder="Your Phone Number" required><br>
-  <input type="email" name="email" placeholder="Your Email" required><br>
-  
-  <select name="serviceType" required>
-    <option value="">Select Service Type</option>
-    <option value="AC Repair">AC Repair</option>
-    <option value="Heating Repair">Heating Repair</option>
-    <option value="Maintenance">Maintenance</option>
-    <option value="New Install">New Install</option>
-  </select><br>
-
-  <select name="propertyType" required>
-    <option value="">Select Property Type</option>
-    <option value="Residential">Residential</option>
-    <option value="Commercial">Commercial</option>
-  </select><br>
-
-  <button type="submit">Get a Free Quote</button>
-</form>
-
-<script>
-  document.getElementById('leadForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    fetch('https://script.google.com/macros/s/AKfycbxjTdFnPHUdgMVkTgGCyAeMYazc_KqZEpxnXV0Ibngxq_un4COJm4G6pvA-_xTW-ijO/exec', {
-      method: 'POST',
-      body: formData
-    })
-    .then(() => alert('Thank you! We will contact you shortly.'))
-    .catch(() => alert('Something went wrong. Please try again.'));
-  });
-</script>
 // Chatbot
 var faqs = [
   { k: ['price','cost','how much','charge','fee','rate'], a: "Pricing depends on the service, system size, and parts needed. We always provide a free estimate before any work begins. A technician will follow up shortly! 🤙" },
