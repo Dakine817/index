@@ -321,31 +321,10 @@ document.getElementById('lead-form').addEventListener('submit', function(e) {
   });
 });
 
-// Chatbot
-var faqs = [
-  { k: ['price','cost','how much','charge','fee','rate'], a: "Pricing depends on the service, system size, and parts needed. We always provide a free estimate before any work begins. A technician will follow up shortly! 🤙" },
-  { k: ['emergency','urgent','asap','right now','today','tonight','broken','not working','stopped'], a: "We offer 24/7 emergency HVAC service across Honolulu and Oahu! 🚨 Since you submitted your info, someone will reach out very soon. Mahalo!" },
-  { k: ['install','new ac','new unit','replace','replacement'], a: "We install all major brands for homes and commercial properties. Usually takes half to a full day. We handle everything from removal to testing! 🌬️" },
-  { k: ['repair','fix','broke','leak','noise','loud','not cooling','not heating'], a: "We repair refrigerant leaks, frozen coils, faulty thermostats, strange noises, and more. Most issues fixed same-day! 🔧" },
-  { k: ['maintenance','tune up','clean','filter','annual'], a: "We recommend a tune-up once a year. Includes coil cleaning, filter checks, refrigerant levels, and full inspection. 🌟" },
-  { k: ['schedule','appointment','available','when','how fast'], a: "Same-day or next-day appointments for most requests. A technician will call you to confirm a time. ⏱️" },
-  { k: ['commercial','business','office','restaurant','building'], a: "We handle commercial HVAC across Oahu and offer ongoing service contracts. 🏢" },
-  { k: ['warranty','guarantee'], a: "Yes! Parts and labor are warranted. Most new equipment includes a manufacturer warranty too. ✅" },
-  { k: ['licensed','insured','certified','trust'], a: "Fully licensed and insured in Hawaii. All technicians are certified and experienced. 🤝" },
-  { k: ['area','location','serve','honolulu','oahu','where'], a: "We serve all of Oahu — Kailua to Kapolei, Aiea to Hawaii Kai. 🌺" },
-  { k: ['hi','hello','hey','aloha','howzit'], a: "Aloha! 🌺 Ask me anything about HVAC services, pricing, or scheduling!" },
-  { k: ['thank','thanks','mahalo'], a: "Mahalo! 🤙 Anything else I can help with?" }
-];
-
-function getReply(txt) {
-  var l = txt.toLowerCase();
-  for (var i = 0; i < faqs.length; i++) {
-    for (var j = 0; j < faqs[i].k.length; j++) {
-      if (l.indexOf(faqs[i].k[j]) >= 0) return faqs[i].a;
-    }
-  }
-  return "Great question! A technician will follow up with specific details. Feel free to ask anything else! 🌺";
-}
+// Chatbot — powered by Gemini AI
+var GEMINI_KEY = 'AIzaSyBPEtUDpXKJ61bmcdwR8mFTjcKG6X6dKU8';
+var GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_KEY;
+var SYSTEM = 'You are a friendly HVAC customer service assistant for Honolulu HVAC Services on Oahu, Hawaii. Help customers with questions about AC repair, AC installation, heating, maintenance, emergency service, pricing, and scheduling. Be warm and professional. Use Aloha or Mahalo occasionally. Keep answers to 2-3 sentences. Do not use markdown formatting. If asked about something unrelated to HVAC, politely redirect back to HVAC topics.';
 
 function addMsg(text, role) {
   var m = document.createElement('div');
@@ -363,12 +342,23 @@ function send() {
   inp.value = '';
   document.getElementById('msg-send').disabled = true;
   document.getElementById('typing').style.display = 'flex';
-  setTimeout(function() {
+  fetch(GEMINI_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ text: SYSTEM + '\n\nCustomer: ' + txt }] }] })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
     document.getElementById('typing').style.display = 'none';
-    addMsg(getReply(txt), 'bot');
+    addMsg(data.candidates[0].content.parts[0].text, 'bot');
     document.getElementById('msg-send').disabled = false;
     inp.focus();
-  }, 900);
+  })
+  .catch(function() {
+    document.getElementById('typing').style.display = 'none';
+    addMsg('Sorry, I had trouble responding. Please try again!', 'bot');
+    document.getElementById('msg-send').disabled = false;
+  });
 }
 
 document.getElementById('msg-send').addEventListener('click', send);
