@@ -303,6 +303,24 @@ document.getElementById('quote-btn').addEventListener('click', function() {
   document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
 });
 
+// Form submission → Google Sheet
+document.getElementById('lead-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  fetch('https://script.google.com/macros/s/AKfycbyFudFhntDxmnbrqNx38OycdtJWlesZHWd9LXrmMd-inBng6fgfqYtij2NerQvEH5YlmQ/exec', {
+    method: 'POST',
+    body: new FormData(this),
+    mode: 'no-cors'
+  }).finally(function() {
+    document.getElementById('lead-form').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+    document.getElementById('chat-section').style.display = 'block';
+    document.getElementById('chat-section').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
 // Chatbot
 var faqs = [
   { k: ['price','cost','how much','charge','fee','rate'], a: "Pricing depends on the service, system size, and parts needed. We always provide a free estimate before any work begins. A technician will follow up shortly! 🤙" },
