@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Honolulu HVAC Services</title>
+<title>Honolulu HVAC Services</title><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-18124362528"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-18124362528');</script><!-- Event snippet for Contact conversion --><script>function gtag_report_conversion(url){var callback=function(){if(typeof(url)!='undefined'){window.location=url;}};gtag('event','conversion',{'send_to':'AW-18124362528/H1fGCMKYy6QcEKCmr8JD','event_callback':callback});return false;}</script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 html { scroll-behavior: smooth; }
@@ -213,13 +213,13 @@ footer strong { color:white; }
   <div class="badge">🌺 Serving Honolulu &amp; Oahu</div>
   <h1>Honolulu's<br><span>HVAC Experts</span></h1>
   <p>Fast, affordable heating &amp; cooling services. Emergency calls welcome. Insured technicians ready today.</p>
-  <a href="tel:18087804086" style="display:block;color:white;font-size:1.4rem;font-weight:600;text-decoration:none;margin-bottom:18px">📞 Call 808-780-4086</a><button class="btn-main" id="quote-btn">Get a Free Quote →</button>
+  <a href="tel:18087804086" onclick="return gtag_report_conversion('tel:18087804086');" style="display:block;color:white;font-size:1.4rem;font-weight:600;text-decoration:none;margin-bottom:18px">📞 Call 808-780-4086</a><button class="btn-main" id="quote-btn">Get a Free Quote →</button>
 </div>
 
 <div class="trust">
   <span>⭐ Insured</span>
   <span>⏱️ Same-Day Service</span>
-  <span>📞 <a href="tel:18087804086" style="color:white;text-decoration:none">Call 808-780-4086</a></span>
+  <span>📞 <a href="tel:18087804086" onclick="return gtag_report_conversion('tel:18087804086');" style="color:white;text-decoration:none">Call 808-780-4086</a></span>
   <span>✅ Free Estimates</span>
 </div>
 
@@ -314,7 +314,7 @@ document.getElementById('lead-form').addEventListener('submit', function(e) {
     body: new FormData(this),
     mode: 'no-cors'
   }).finally(function() {
-    document.getElementById('lead-form').style.display = 'none';
+    gtag_report_conversion();document.getElementById('lead-form').style.display = 'none';
     document.getElementById('success-msg').style.display = 'block';
     document.getElementById('chat-section').style.display = 'block';
     document.getElementById('chat-section').scrollIntoView({ behavior: 'smooth' });
