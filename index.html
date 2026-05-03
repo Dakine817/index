@@ -299,13 +299,16 @@ footer strong { color:white; }
 
 <script>
 // Scroll button
-document.getElementById('quote-btn').addEventListener('click', function() {
+document.getElementById('quote-btn').submit('click', function() {
   document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
 });
 
 // Form submission → Google Sheet
 document.getElementById('lead-form').addEventListener('submit', function(e) {
   e.preventDefault();
+          gtag('event', 'conversion', {
+                      'send_to': 'AW-18124362528:H1fGCMKYy6QcEKCmr8JD'
+          });
   var btn = document.getElementById('submit-btn');
   btn.disabled = true;
   btn.textContent = 'Sending...';
