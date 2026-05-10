@@ -299,7 +299,7 @@ footer strong { color:white; }
 
 <script>
 // Scroll button
-document.getElementById('quote-btn').submit('click', function() {
+document.getElementById('quote-btn').addEventListener('click', function() {
   document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
 });
 
